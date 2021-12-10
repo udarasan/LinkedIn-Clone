@@ -17,7 +17,7 @@ export default class TabNavScreen extends Component {
     this.state = {
       username:auth().currentUser.displayName,
       profileImage:auth().currentUser.photoURL,
-      userID:auth().currentUser.uid
+      userID:auth().currentUser.uid,
     };
   }
 
@@ -37,31 +37,31 @@ export default class TabNavScreen extends Component {
         ]
     }}
     >
-      <Tab.Screen name="Home" initialParams={{ currentuser: this.state.username,userImage:this.state.profileImage,uid:this.state.userID }} component={HomeScreen} options={{
+      <Tab.Screen name="Home" initialParams={{ currentuser: this.state.username,userImage:this.state.profileImage,uid:this.state.userID,displayName:this.state.username }} component={HomeScreen} options={{
           tabBarLabel: 'Home',headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <AwesomeIcon  name="home" color={color} size={size} />
           ),
         }}/>
-      <Tab.Screen name="MyNetwork" initialParams={{ currentuser: this.state.username,userImage:this.state.profileImage,uid:this.state.userID   }} component={MyNetworkScreen} options={{
+      <Tab.Screen name="MyNetwork" initialParams={{ currentuser: this.state.username,userImage:this.state.profileImage,uid:this.state.userID,displayName:this.state.username    }} component={MyNetworkScreen} options={{
           tabBarLabel: 'MyNetwork',headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <AwesomeIcon  name="user-friends" color={color} size={size} />
           ),
         }}/>
-      <Tab.Screen name="Post"  initialParams={{ currentuser: this.state.username,userImage:this.state.profileImage,uid:this.state.userID   }} component={PostScreen} options={{
+      <Tab.Screen name="Post"  initialParams={{ currentuser: this.state.username,userImage:this.state.profileImage,uid:this.state.userID,displayName:this.state.username    }} component={PostScreen} options={{
           tabBarLabel: 'Post',headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <AwesomeIcon  name="plus-square" color={color} size={size} />
           ),
         }}/>
-        <Tab.Screen name="Notification" initialParams={{ currentuser: this.state.username,userImage:this.state.profileImage,uid:this.state.userID   }} component={NotificationScreen} options={{
+        <Tab.Screen name="Notification" initialParams={{ currentuser: this.state.username,userImage:this.state.profileImage,uid:this.state.userID ,displayName:this.state.username   }} component={NotificationScreen} options={{
           tabBarLabel: 'Notification',headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <AwesomeIcon  name="bell" color={color} size={size} />
           ),
         }}/>
-      <Tab.Screen name="Jobs" initialParams={{ currentuser: this.state.username,userImage:this.state.profileImage,uid:this.state.userID   }} component={JobsScreen} options={{
+      <Tab.Screen name="Jobs" initialParams={{ currentuser: this.state.username,userImage:this.state.profileImage,uid:this.state.userID,displayName:this.state.username    }} component={JobsScreen} options={{
           tabBarLabel: 'Jobs',headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <AwesomeIcon  name="briefcase" color={color} size={size} />
