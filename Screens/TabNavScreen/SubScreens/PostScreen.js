@@ -125,7 +125,7 @@ export default class PostScreen extends Component {
         fileURL: imageUrl,
       })
       this.saveRecordInFireStore(imageUrl);
-      this.props.navigation.navigate('HomeScreen')
+      this.props.navigation.navigate('Home', { screen: 'Home' });
 
     }
 

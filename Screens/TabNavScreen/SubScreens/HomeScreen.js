@@ -14,21 +14,6 @@ export default class HomeScreen extends Component {
     this.state = {
       searchQuery: '',
       profileImage: auth().currentUser.photoURL,
-      data: [
-        {
-          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-          title: 'First Item',
-        },
-        {
-          id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-          title: 'Second Item',
-        },
-        {
-          id: '58694a0f-3da1-471f-bd96-145571e29d72',
-          title: 'Third Item',
-        },
-      ]
-
     };
   }
 
@@ -36,20 +21,25 @@ export default class HomeScreen extends Component {
   onChangeSearch(query) {
     setSearchQuery(query);
   }
-
+componentDidMount(){
+  this.getPostsToFeed
+}
   getPostsToFeed = async () => {
+    const gk = [];
     firestore()
       .collection('Posts')
       .get()
       .then(querySnapshot => {
-        console.log('Total users: ', querySnapshot.size);
         querySnapshot.forEach(documentSnapshot => {
           //console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
           console.log(documentSnapshot.data());
-          this.setState({
-            
-          })
+          const playerObject = documentSnapshot.data();
+          gk.push({caption: playerObject.caption, fileURL: playerObject.fileURL, userProfilURL: playerObject.userProfilURL, userName: playerObject.userName});
+          console.log(gk);
         });
+        this.setState({
+          postData:gk
+        })
       });
 
   }
@@ -57,9 +47,9 @@ export default class HomeScreen extends Component {
   getListViewItem = (item) => {
     Alert.alert(item.key);
   }
+
   render() {
     const fireUser = auth().currentUser;
-    console.log(fireUser);
 
     return (
       <SafeAreaView style={styles.container}>
@@ -75,57 +65,32 @@ export default class HomeScreen extends Component {
             value={this.state.searchQuery}
           />
           <AwesomeIcon style={styles.icon1} onPress={this.getPostsToFeed} name="comment-dots" color={'#666666'} size={30} />
-
-          {/* <FlatList
-
-          // data={this.state.data}
-          // renderItem={({ item }) =>
-          //   <Text style={styles.item}>{item.title}</Text>
-          //   <Text style={styles.item}>{item.title}</Text>
-          //   <Text style={styles.item}>{item.title}</Text>
-          
-          
-          // }
-            
-
-        /> */}
-
-          {/* <View style={styles.view1}>
-            <Text style={styles.txt1}>Land your dream role</Text>
-            <Image
-              style={styles.img2}
-              source={require('../../../assests/banner1.png')}
-            />
-            <Text style={styles.txt2}>Ge4t notified when new jobs match your preferd title and location</Text>
-            <Button style={styles.btn1} onPress={() => console.log('Pressed')}>
-              <Text style={styles.txt3}>Create Job Alert</Text>
-            </Button>
-          </View> */}
-
         </View>
+
+
         <FlatList
-          data={this.state.data}
+          data={this.state.postData}
           renderItem={({ item }) =>
             <View style={styles.view6}>
 
               <Image
                 style={styles.img3}
-                source={require('../../../assests/user.png')}
+                source={{ uri:item.userProfilURL}}
               />
 
               <View style={styles.view2}>
-                <Text style={styles.txt4}>Jhon Doe</Text>
+                <Text style={styles.txt4}>{item.userName}</Text>
                 <Text style={styles.txt5}>63 Followers</Text>
-                <Text style={styles.txt5}>1w . Edited .  <AwesomeIcon style={styles.icon1} name="globe-americas" size={12} /></Text>
+                <Text style={styles.txt5}>{item.creation}. Edited .  <AwesomeIcon style={styles.icon1} name="globe-americas" size={12} /></Text>
               </View>
 
               <TouchableOpacity ><Text style={styles.txt6}>+  Follow </Text></TouchableOpacity>
 
-              <Text style={styles.txt7}>{item.title}<Text style={styles.txt5}>see more</Text></Text>
+              <Text style={styles.txt7}>{item.caption}<Text style={styles.txt5}>see more</Text></Text>
 
               <Image
                 style={styles.img4}
-                source={require('../../../assests/post1.jpg')}
+                source={{ uri:item.fileURL}}
               />
 
               <View style={styles.view3}><Text><AwesomeIcon style={styles.icon1} color={'#368EE9'} name="thumbs-up" size={14} />  <AwesomeIcon style={styles.icon1} color={'#D96D49'} name="heart" size={14} />  <AwesomeIcon style={styles.icon1} color={'#70AF50'} name="sign-language" size={14} />  26</Text></View>
@@ -140,7 +105,7 @@ export default class HomeScreen extends Component {
               </View>
 
             </View>
-          } /> 
+          } />
       </SafeAreaView>
     );
   }
@@ -226,7 +191,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 15,
     width: 48,
-    height: 48
+    height: 48,
+    borderRadius:100
   },
   txt6: {
     fontSize: 16,
