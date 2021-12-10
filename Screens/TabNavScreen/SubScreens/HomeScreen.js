@@ -15,6 +15,7 @@ export default class HomeScreen extends Component {
       searchQuery: '',
       profileImage: auth().currentUser.photoURL,
     };
+    this.getPostsToFeed=this.getPostsToFeed(this)
   }
 
 
@@ -64,7 +65,7 @@ componentDidMount(){
             onChangeText={this.onChangeSearch}
             value={this.state.searchQuery}
           />
-          <AwesomeIcon style={styles.icon1} onPress={this.getPostsToFeed} name="comment-dots" color={'#666666'} size={30} />
+          <AwesomeIcon style={styles.icon1}  name="comment-dots" color={'#666666'} size={30} />
         </View>
 
 
