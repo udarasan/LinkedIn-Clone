@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, StatusBar, FlatList, Alert } from 'react-native';
+import { View, Text, Image, StyleSheet, SafeAreaView, ScrollView,RefreshControl, TouchableOpacity, StatusBar, FlatList, Alert } from 'react-native';
 import { Searchbar, Button } from 'react-native-paper';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import auth from '@react-native-firebase/auth'
@@ -14,16 +14,42 @@ export default class HomeScreen extends Component {
     this.state = {
       searchQuery: '',
       profileImage: auth().currentUser.photoURL,
+      isLoading: true,
+      refreshing: false,
     };
-    this.getPostsToFeed=this.getPostsToFeed(this)
+    
   }
+ 
 
-
+  _onRefresh() {
+    this.setState({refreshing: true});
+    this.getPostsToFeed().then(() => {
+      this.setState({refreshing: false});
+    });
+  }
+  
   onChangeSearch(query) {
     setSearchQuery(query);
   }
-componentDidMount(){
-  this.getPostsToFeed
+
+  componentDidMount(){
+
+    const gk = [];
+    firestore()
+      .collection('Posts')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          console.log(documentSnapshot.data());
+          const playerObject = documentSnapshot.data();
+          gk.push({caption: playerObject.caption, fileURL: playerObject.fileURL, userProfilURL: playerObject.userProfilURL, userName: playerObject.userName});
+          console.log(gk);
+        });
+        this.setState({
+          postData:gk
+        })
+      });
+ 
 }
   getPostsToFeed = async () => {
     const gk = [];
@@ -32,7 +58,6 @@ componentDidMount(){
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
-          //console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
           console.log(documentSnapshot.data());
           const playerObject = documentSnapshot.data();
           gk.push({caption: playerObject.caption, fileURL: playerObject.fileURL, userProfilURL: playerObject.userProfilURL, userName: playerObject.userName});
@@ -48,12 +73,13 @@ componentDidMount(){
   getListViewItem = (item) => {
     Alert.alert(item.key);
   }
-
+  
   render() {
     const fireUser = auth().currentUser;
 
     return (
       <SafeAreaView style={styles.container}>
+        
         <View style={styles.header} >
           <Image
             style={styles.img1}
@@ -70,6 +96,12 @@ componentDidMount(){
 
 
         <FlatList
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh.bind(this)}
+          />
+        }
           data={this.state.postData}
           renderItem={({ item }) =>
             <View style={styles.view6}>
@@ -106,7 +138,9 @@ componentDidMount(){
               </View>
 
             </View>
-          } />
+          } 
+         
+          />
       </SafeAreaView>
     );
   }

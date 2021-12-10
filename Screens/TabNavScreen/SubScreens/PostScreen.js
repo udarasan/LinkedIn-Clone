@@ -114,7 +114,7 @@ export default class PostScreen extends Component {
         fileURL: videoUrl,
       })
       this.saveRecordInFireStore(videoUrl);
-      this.props.navigation.navigate('HomeScreen')
+      this.props.navigation.navigate('Home', { screen: 'Home' });
 
     } else {
       const reference = storage().ref(`postImages/${this.state.imageName}`);
