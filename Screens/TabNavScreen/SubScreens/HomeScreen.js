@@ -4,7 +4,10 @@ import { Searchbar, Button } from 'react-native-paper';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import auth from '@react-native-firebase/auth'
 
+
 import firestore from '@react-native-firebase/firestore';
+import UserScreen from './../../MainScreens/UserScreen';
+
 
 
 export default class HomeScreen extends Component {
@@ -81,10 +84,13 @@ export default class HomeScreen extends Component {
       <SafeAreaView style={styles.container}>
         
         <View style={styles.header} >
+        <TouchableOpacity onPress={()=>this.props.navigation.navigate('UserScreen')}>
           <Image
             style={styles.img1}
             source={{ uri: this.state.profileImage }}
+            
           />
+          </TouchableOpacity>
           <Searchbar
             style={styles.searchbar}
             placeholder="Search"
@@ -100,6 +106,7 @@ export default class HomeScreen extends Component {
           <RefreshControl
             refreshing={this.state.refreshing}
             onRefresh={this._onRefresh.bind(this)}
+            
           />
         }
           data={this.state.postData}
@@ -119,7 +126,7 @@ export default class HomeScreen extends Component {
 
               <TouchableOpacity ><Text style={styles.txt6}>+  Follow </Text></TouchableOpacity>
 
-              <Text style={styles.txt7}>{item.caption}<Text style={styles.txt5}>see more</Text></Text>
+              <Text style={styles.txt7}>{item.caption}<Text style={styles.txt5}>      see more</Text></Text>
 
               <Image
                 style={styles.img4}
@@ -129,11 +136,11 @@ export default class HomeScreen extends Component {
               <View style={styles.view3}><Text><AwesomeIcon style={styles.icon1} color={'#368EE9'} name="thumbs-up" size={14} />  <AwesomeIcon style={styles.icon1} color={'#D96D49'} name="heart" size={14} />  <AwesomeIcon style={styles.icon1} color={'#70AF50'} name="sign-language" size={14} />  26</Text></View>
               <Text style={styles.txt8}>2 comments</Text>
 
-              <View style={styles.view4}><Text><AwesomeIcon style={styles.icon1} color={'#666666'} name="thumbs-up" size={19} />                <AwesomeIcon style={styles.icon1} color={'#666666'} name="comment-dots" size={19} />                  <AwesomeIcon style={styles.icon1} color={'#666666'} name="share" size={19} />                <AwesomeIcon style={styles.icon1} color={'#666666'} name="paper-plane" size={19} /></Text></View>
+              <View style={styles.view4}><Text><AwesomeIcon style={styles.icon1} color={'#666666'} name="thumbs-up" size={19} />                      <AwesomeIcon style={styles.icon1} color={'#666666'} name="comment-dots" size={19} />                        <AwesomeIcon style={styles.icon1} color={'#666666'} name="share" size={19} />                    <AwesomeIcon style={styles.icon1} color={'#666666'} name="paper-plane" size={19} /></Text></View>
 
               <View style={styles.view5}>
-                <Text>
-                  <Text>Like</Text>         <Text>Comment</Text>         <Text>share</Text>             <Text>send</Text>
+                <Text> 
+                  <Text>Like</Text>              <Text>Comment</Text>               <Text>share</Text>                 <Text>send</Text>
                 </Text>
               </View>
 

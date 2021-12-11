@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, KeyboardAvoidingView, RefreshControl, ScrollView } from 'react-native';
 import { Appbar, TextInput, Chip, List } from 'react-native-paper';
 import { auth, firebase } from '@react-native-firebase/auth';
 import { useRoute } from '@react-navigation/core';
@@ -22,17 +22,17 @@ export default class PostScreen extends Component {
     this.state = {
       fileURL: '',
       caption: ''
-
     };
   }
+
   saveRecordInFireStore = (url) => {
     console.log("udara");
     firestore()
       .collection('Posts')
       .add({
         userID: this.props.route.params.uid,
-        userProfilURL:this.props.route.params.userImage,
-        userName:this.props.route.params.displayName,
+        userProfilURL: this.props.route.params.userImage,
+        userName: this.props.route.params.displayName,
         caption: this.state.caption,
         fileURL: url,
         creation: firestore.FieldValue.serverTimestamp(),
@@ -115,6 +115,7 @@ export default class PostScreen extends Component {
       })
       this.saveRecordInFireStore(videoUrl);
       this.props.navigation.navigate('Home', { screen: 'Home' });
+      
 
     } else {
       const reference = storage().ref(`postImages/${this.state.imageName}`);
@@ -126,7 +127,9 @@ export default class PostScreen extends Component {
       })
       this.saveRecordInFireStore(imageUrl);
       this.props.navigation.navigate('Home', { screen: 'Home' });
-
+      
+      
+ 
     }
 
 
@@ -134,13 +137,11 @@ export default class PostScreen extends Component {
   }
 
 
-
-
   render() {
-
+   
 
     return (
-
+      
       <SafeAreaView>
         <View>
           <Appbar.Header style={styles.header}>
@@ -158,11 +159,11 @@ export default class PostScreen extends Component {
               label="What do you want to talk about?"
               multiline={true}
               numberOfLines={4}
-
               onChangeText={(text) => this.setState({ caption: text })}
               value={this.state.text} />
             <Image style={styles.postImage}
               source={{ uri: this.state.imagePath }} />
+
           </ScrollView>
         </View>
 
@@ -174,10 +175,6 @@ export default class PostScreen extends Component {
         </Appbar>
 
       </SafeAreaView>
-
-
-
-
 
     );
   }

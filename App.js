@@ -7,6 +7,9 @@ import LoginScreen from './Screens/MainScreens/LoginScreen';
 import SignupScreen from './Screens/MainScreens/SignupScreen';
 import TabNavScreen from './Screens/TabNavScreen/TabNavScreen';
 import HomeScreen from './Screens/TabNavScreen/SubScreens/HomeScreen';
+import UserScreen from './Screens/MainScreens/UserScreen';
+
+
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +22,7 @@ export default class App extends Component {
         <Stack.Screen name="StartScreen" options={{headerShown: false}} component={StartScreen} />
         <Stack.Screen name="LoginScreen" options={{headerShown: false}} component={LoginScreen} />
         <Stack.Screen name="SignupScreen" options={{headerShown: false}} component={SignupScreen} />
+        <Stack.Screen name="UserScreen" options={{headerShown: false}} component={UserScreen} />
         <Stack.Screen name="TabNavScreen" options={{headerShown: false}} component={TabNavScreen} />
         <Stack.Screen name="HomeScreen" options={{headerShown: false}} component={HomeScreen} />
       </Stack.Navigator>

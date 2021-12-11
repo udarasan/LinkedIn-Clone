@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
-
+import auth from '@react-native-firebase/auth'
 export default class MyNetworkScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchQuery:''
+      searchQuery:'',
+      profileImage: auth().currentUser.photoURL,
     };
   }
 
@@ -20,7 +21,7 @@ export default class MyNetworkScreen extends Component {
       <SafeAreaView style={styles.container}>
       <Image
       style={styles.img1}
-      source={require('../../../assests/user.png')}
+      source={{ uri: this.state.profileImage }}
       />
       <Searchbar
       style={styles.searchbar}
@@ -88,15 +89,17 @@ const styles = StyleSheet.create({
       color:'#FEFEFE',
     },
     img1:{
-        marginTop:10,
-        marginLeft:10,
-        width:40,
-        height:40
+      marginTop: 10,
+      marginLeft: 10,
+      width: 40,
+      height: 40,
+      borderRadius: 100
     },
     searchbar:{
-        width:250,
-        marginLeft:60,
-        marginTop:-40
+      width: 250,
+      height: 40,
+      marginLeft: 60,
+      marginTop: -40
     },
     icon1:{
        marginLeft:323,

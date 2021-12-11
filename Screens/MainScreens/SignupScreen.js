@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
 import auth from '@react-native-firebase/auth'
 import TabNavScreen from './../TabNavScreen/TabNavScreen';
 
